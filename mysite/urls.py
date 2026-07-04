@@ -24,5 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', viwes.home, name="home"),
     path('employees/',include('employee.urls')),
-    path('templateexample/',include('templateexample.urls'))
+    path('templateexample/',include('templateexample.urls')),
+
+    path('api/',include('api.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

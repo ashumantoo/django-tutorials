@@ -33,7 +33,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -44,7 +43,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'employee',
-    'templateexample'
+    'templateexample',
+    'rest_framework',
+    'api'
 ]
 
 MIDDLEWARE = [
@@ -73,6 +74,13 @@ TEMPLATES = [
         },
     },
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',  # Enables the web UI interface
+    ],
+}
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
