@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Django Template Basic Concept</title>
+</head>
+<body>
+ <div style="margin:40px ">
+   {# single line comment in Django #}
+   {% comment %}
+     this is multiline comment
+   {% endcomment %}
+   <h3>Django Template Basic Concept - Variables from view context </h3>
+   <hr>
+   <p>Name : {{name}}</p>
+   <p>Name : {{age}}</p>
+
+   {# List access #}
+   <p>First skill: {{skills.0}}</p>
+   <p>all skills: {{skills}}</p>
+
+   {# Looping through list(skills) #}
+   <h3>Person skills</h3>
+   {% for item in skills %}
+   <p> {{item}} </p>
+   {% endfor %}
+
+   <h3>Accessing information from Dict</h3>
+   <p>username: {{user.name}}</p>
+   <p>username: {{user.email}}</p>
+   <p>Blog title: {{blog.title}}</p>
+
+   <h3>Displaying html content directly from backend using 'safe'</h3>
+   <p>Blog content: {{blog.content | safe}}</p>
+
+   <h3>Displaying None value with conditional</h3>
+   <p>Empty value: {{empty_value | default_if_none:"No Data"}}</p>
+ </div>
+</body>
+</html>

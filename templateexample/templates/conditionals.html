@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Django Template Basic Concept</title>
+</head>
+<body>
+ <div style="margin:40px ">
+   <h2>Conditionals and control flow in Django Template</h2>
+   <h3>Blog List: using for loop</h3>
+   <ul>
+     {%for post in posts%}
+     <li> {{forloop.counter}}. {{post.title}} - {{post.author}} </li>
+     {%empty%}
+     <li>No blog found</li>
+   {%endfor%}
+   </ul>
+   <hr>
+   <h4>IF ELSE</h4>
+   {% if posts.0.is_featured %}
+   <p><b>Featured Blog</b> : {{posts.0.title}}</p>
+   {%else%}
+   <p><b>Normal Blog</b> : {{posts.0.title}}</p>
+   {%endif%}
+
+   <hr>
+   <h4>'with' keyword</h4>
+   {% with total_blogs=posts|length %}
+   <p><b>Total Blogs</b> : {{total_blogs}}</p>
+   {%endwith%}
+
+   <hr>
+   <h4>Blogs in table</h4>
+   <table border="1" cellpadding="5" cellspacing="0">
+     {% for post in posts %}
+     <tr style="background-color:{% cycle 'lightblue' 'pink' %}">
+       <td>{{forloop.counter}}</td>
+       <td>{{post.title}}</td>
+       <td>{{post.author}}</td>
+       <td>{{post.created_at}}</td>
+     </tr>
+     {%endfor%}
+   </table>
+
+   <hr>
+   <h3>autoescape:</h3>
+   <p>It is a security shamanism followed by django to avoid malware injection through html</p>
+   <span>any html tag and content will be treated as normal string value</span>
+   <p>Default (safe escaped): {{html_code}}</p>
+   <p>Unsafe (autoescaped off) : {{html_code|safe}}</p>
+   {%autoescape off%}
+   <p>Unsafe (2nd way) : {{html_code|safe}}</p>
+   {%endautoescape%}
+ </div>
+</body>
+</html>

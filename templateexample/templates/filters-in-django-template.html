@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Django Template Basic Concept</title>
+</head>
+<body>
+ <div style="margin:40px ">
+   <h3>Filters in Django Template</h3>
+   <hr>
+   <p> <b>Title (Normal):</b> {{post.title}} </p>
+   <p> <b> Uppercase :</b> {{post.title | upper}} </p>
+   <p> <b> Lowercase :</b> {{post.title | lower}} </p>
+   <p> <b> Capitalize :</b> {{post.title | capfirst}} </p>
+   <p> <b> Truncate chars :</b> {{post.title | truncatechars:10}} </p>
+   <p> <b> Truncate words :</b> {{post.title | truncatewords:3}} </p>
+  <hr>
+   <h4>None: Yes or no</h4>
+   <p> <b> Author Available?:</b> {{post.author | yesno:"yes,no,maybe" }} </p>
+
+   <hr>
+   <h4>Float formatting</h4>
+   <p> <b>Float Number:</b> {{post.float_value | floatformat:3 }} </p>
+
+   <hr>
+   <h4>List filters</h4>
+   <p> <b> First tag :</b> {{post.tags | first}} </p>
+   <p> <b> Tags Length :</b> {{post.tags | length }} </p>
+   <p> <b> Slice (First 2) :</b> {{post.tags | slice:":2" }} </p>
+   <p> <b> Join Tags :</b> {{post.tags | join:" ," }} </p>
+
+   <hr>
+   <h4>Date and time filters</h4>
+   <p> <b> Created at (Normal) :</b> {{post.created_at}} </p>
+   <p> <b> Created at :</b> {{post.created_at | date:'D d M Y'}} </p>
+   <p> <b> Time only :</b> {{post.created_at | time:'H:i'}} </p>
+
+ </div>
+</body>
+</html>
