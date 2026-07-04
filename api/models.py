@@ -1,5 +1,4 @@
 from django.db import models
-from django.db.models.enums import Choices
 
 
 class PeopleContact(models.Model):
@@ -24,3 +23,19 @@ class PeopleContact(models.Model):
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
 
+
+
+class Apartment(models.Model):
+    name = models.CharField(max_length=50)
+    email = models.EmailField(unique=True)
+    phone = models.CharField(max_length=16)
+    address = models.CharField(max_length=100)
+    total_flats = models.IntegerField()
+    amenities = models.CharField(default=list, blank=True)
+    construction_date = models.DateField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    is_available = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f'{self.name}'
