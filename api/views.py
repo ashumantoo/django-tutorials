@@ -1,9 +1,11 @@
 from django.http import JsonResponse, Http404
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework import status, generics
+from rest_framework import status, generics, permissions
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.decorators import api_view
 from rest_framework.parsers import JSONParser
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -16,6 +18,7 @@ METHOD 1
  - This is api is written using Django regular view with the help of function definition
  - This is approach nothing related to REST framework feature
 """
+
 
 @csrf_exempt
 def people_contacts(request):
@@ -70,6 +73,8 @@ METHOD 2
  - REST Framework Feature - Function Based View 
  - request and Response are here the DRF objects not the Django object
  """
+
+
 @api_view(['GET', 'POST'])
 def apartments_list(request):
     if request.method == 'GET':
@@ -119,10 +124,14 @@ METHOD 3
 - REST Framework Feature - Class Based View
 - Inheriting APIView class from DRF
 """
+
+
 class ShopList(APIView):
     """
     List all shops, or create a new shop.
     """
+    authentication_classes = [BasicAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, format=None):
         shops = Shop.objects.all()
@@ -142,6 +151,8 @@ class ShopDetail(APIView):
     """
     Retrieve, update or delete a snippet instance.
     """
+    authentication_classes = [BasicAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def get_object(self, pk):
         try:
@@ -168,6 +179,7 @@ class ShopDetail(APIView):
         shop.delete()
         return Response({'success': True}, status=status.HTTP_204_NO_CONTENT)
 
+
 """
 METHOD 4
 - REST Framework Feature - Using Generic Class Based View
@@ -175,10 +187,17 @@ METHOD 4
   inside the inherited ListCreateApiView and RetriveUpdateDestoryAPIView class
 - All the internal details are hidden    
 """
+
+
 class ShopItemList(generics.ListCreateAPIView):
     queryset = ShopItem.objects.all()
+    authentication_classes = [BasicAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = ShopItemSerializer
+
 
 class ShopItemDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = ShopItem.objects.all()
+    authentication_classes = [BasicAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = ShopItemSerializer
