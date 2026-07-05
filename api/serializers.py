@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from api.models import PeopleContact, Apartment, Shop
+from api.models import PeopleContact, Apartment, Shop, ShopItem
 
 
 class PeopleContactSerializer(serializers.ModelSerializer):
@@ -23,3 +23,10 @@ class ShopSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'email', 'phone', 'address', 'category', 'open_date', 'selling_items',
                   'operating_hours',
                   'operating_days', 'created_at', 'updated_at']
+
+
+class ShopItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ShopItem
+        fields = ['id', 'shop', 'name', 'price', 'quantity', 'manufacture_date', 'expiry_date', 'created_at',
+                  'updated_at', 'is_available']

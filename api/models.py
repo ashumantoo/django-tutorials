@@ -57,3 +57,18 @@ class Shop(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class ShopItem(models.Model):
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    name = models.CharField(max_length=50)
+    price = models.FloatField()
+    quantity = models.IntegerField()
+    is_available = models.BooleanField(default=True)
+    manufacture_date = models.DateField(blank=True, null=True)
+    expiry_date = models.DateField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.name}'

@@ -1,16 +1,18 @@
 from django.http import JsonResponse, Http404
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework import status
+from rest_framework import status, generics
 from rest_framework.decorators import api_view
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from api.models import PeopleContact, Apartment, Shop
-from api.serializers import PeopleContactSerializer, ApartmentSerializer, ShopSerializer
+from api.models import PeopleContact, Apartment, Shop, ShopItem
+from api.serializers import PeopleContactSerializer, ApartmentSerializer, ShopSerializer, ShopItemSerializer
 
 """
+METHOD 1
+
  - This is api is written using Django regular view with the help of function definition
  - This is approach nothing related to REST framework feature
 """
@@ -64,6 +66,7 @@ def people_contacts_details(request, pk):
 
 
 """
+METHOD 2
  - REST Framework Feature - Function Based View 
  - request and Response are here the DRF objects not the Django object
  """
@@ -112,6 +115,7 @@ def apartments_details(request, pk):
 
 
 """
+METHOD 3
 - REST Framework Feature - Class Based View
 - Inheriting APIView class from DRF
 """
@@ -163,3 +167,18 @@ class ShopDetail(APIView):
         shop = self.get_object(pk)
         shop.delete()
         return Response({'success': True}, status=status.HTTP_204_NO_CONTENT)
+
+"""
+METHOD 4
+- REST Framework Feature - Using Generic Class Based View
+- Most concise way - almost everything here handled by Django rest framework 
+  inside the inherited ListCreateApiView and RetriveUpdateDestoryAPIView class
+- All the internal details are hidden    
+"""
+class ShopItemList(generics.ListCreateAPIView):
+    queryset = ShopItem.objects.all()
+    serializer_class = ShopItemSerializer
+
+class ShopItemDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ShopItem.objects.all()
+    serializer_class = ShopItemSerializer
